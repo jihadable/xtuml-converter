@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xtUML to C#</title>
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="../styles/convert-section.css">
+    <style>
+        body {
+            display: flex;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 70%;
+            width: 80%;
+            margin: auto;
+        }
+
+        input[type="file"],
+        button {
+            margin: 10px 0;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .translate-btn {
+            background-color: #66cc66;
+            color: #fff;
+        }
+
+        .info-btn,
+        .help-btn {
+            background-color: #ff6600;
+            color: #fff;
+            font-size: 16px;
+            padding: 5px 10px;
+        }
+
+        textarea,
+        pre {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 20px;
+            overflow: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #fff;
+            text-align: left;
+        }
+
+        .preview-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .preview-container pre {
+            flex: 1;
+            width: 450px;
+        }
+
+        .popup {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .popup.visible {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-overflow">
+            <div class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/id/c/c6/Logo_UIN_Sunan_Kalijaga.png" alt="UIN SUKA">
+            </div>
+            <div class="links">
+                <a href="../xtuml-to-javascript/" class="link">xtUML to Javascript</a>
+                <a href="../xtuml-to-go/" class="link">xtUML to Go</a>
+                <a href="../xtuml-to-c/" class="link">xtUML to C</a>
+                <a href="../xtuml-to-dart/" class="link">xtUML to Dart</a>
+                <a href="../xtuml-to-cpp/" class="link">xtUML to C++</a>
+                <a href="../xtuml-to-ruby/" class="link">xtUML to Ruby</a>
+                <a href="../xtuml-to-python/" class="link">xtUML to Python</a>
+                <a href="../xtuml-to-swift/" class="link">xtUML to Swift</a>
+                <a href="../xtuml-to-php/" class="link">xtUML to PHP</a>
+                <a href="../xtuml-to-typescript/" class="link">xtUML to Typescript</a>
+                <a href="../xtuml-to-java/" class="link">xtUML to Java</a>
+                <a href="../xtuml-to-kotlin/" class="link">xtUML to Kotlin</a>
+                <a href="../xtuml-to-csharp/" class="link">xtUML to C#</a>
+                <a href="../xtuml-to-sql/" class="link">xtUML to SQL</a>
+                <a href="../visualization/" class="link">Visualization</a>
+            </div>
+        </div>
+    </nav>
+    <div class="convert-section">
+        <div class="convert">
+            <div class="container">
+                <h1>xtUML to C#</h1>
+                <input type="file" id="fileInput" accept=".json">
+                <button class="translate-btn" onclick="translateJson()">Translate</button>
+                <button class="info-btn" onclick="togglePopup('info')">i</button>
+                <button class="help-btn" onclick="togglePopup('help')">?</button>
+                <div class="popup" id="info">
+                    <h3>Info</h3>
+                    <p>This program converts an xtUML model JSON file into a C# class definition. It reads the JSON structure
+                        and generates the corresponding C# code with properties and nested classes.</p>
+                </div>
+                <div class="popup" id="help">
+                    <h3>Help</h3>
+                    <p>To use this program, upload your JSON file using the file input, and click the "Translate" button. The
+                        JSON preview and the resulting C# code will be displayed below.</p>
+                </div>
+                <div class="preview-container">
+                    <div>
+                        <h2>JSON Preview</h2>
+                        <pre id="jsonPreview"></pre>
+                    </div>
+                    <div>
+                        <h2>C# Code Preview</h2>
+                        <pre id="csharpPreview"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function translateJson() {
+            const fileInput = document.getElementById('fileInput');
+            const jsonPreview = document.getElementById('jsonPreview');
+            const csharpPreview = document.getElementById('csharpPreview');
+
+            if (fileInput.files.length === 0) {
+                alert('Please select a JSON file.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                try {
+                    const json = JSON.parse(event.target.result);
+                    jsonPreview.textContent = JSON.stringify(json, null, 2);
+
+                    let csharpCode = '';
+
+                    json.model.forEach(model => {
+                        if (model.type === 'class') {
+                            csharpCode += `public class ${model.class_name} {\n`;
+                            model.attributes.forEach(attr => {
+                                let csharpType;
+                                switch (attr.data_type) {
+                                    case 'id':
+                                        csharpType = 'int';
+                                        break;
+                                    case 'string':
+                                        csharpType = 'string';
+                                        break;
+                                    case 'integer':
+                                        csharpType = 'int';
+                                        break;
+                                    case 'real':
+                                        csharpType = 'double';
+                                        break;
+                                    case 'state':
+                                        csharpType = 'string';
+                                        break;
+                                    default:
+                                        csharpType = 'object';
+                                }
+                                csharpCode += `    public ${csharpType} ${attr.attribute_name} { get; set; }\n`;
+                            });
+
+                            if (model.states) {
+                                csharpCode += `\n    // States\n`;
+                                model.states.forEach(state => {
+                                    csharpCode += `    public class ${state.state_name} {\n`;
+                                    csharpCode += `        public string StateId { get; set; } = "${state.state_id}";\n`;
+                                    csharpCode += `        public string StateValue { get; set; } = "${state.state_value}";\n`;
+                                    csharpCode += `        public string StateType { get; set; } = "${state.state_type}";\n`;
+                                    csharpCode += `        public List<string> StateEvents { get; set; } = new List<string> { ${state.state_event.map(event => `"${event}"`).join(', ')} };\n`;
+                                    csharpCode += `    }\n`;
+                                });
+                            }
+
+                            csharpCode += '}\n\n';
+                        } else if (model.type === 'association') {
+                            csharpCode += `public class ${model.name} {\n`;
+                            model.class.forEach(cls => {
+                                csharpCode += `    public class ${cls.class_name} {\n`;
+                                csharpCode += `        public string ClassId { get; set; } = "${cls.class_id}";\n`;
+                                csharpCode += `        public string ClassMultiplicity { get; set; } = "${cls.class_multiplicity}";\n`;
+                                csharpCode += `    }\n`;
+                            });
+                            csharpCode += '}\n\n';
+                        } else if (model.type === 'association_class') {
+                            csharpCode += `public class ${model.class_name} {\n`;
+                            model.attributes.forEach(attr => {
+                                let csharpType;
+                                switch (attr.data_type) {
+                                    case 'id':
+                                        csharpType = 'int';
+                                        break;
+                                    case 'string':
+                                        csharpType = 'string';
+                                        break;
+                                    case 'integer':
+                                        csharpType = 'int';
+                                        break;
+                                    case 'real':
+                                        csharpType = 'double';
+                                        break;
+                                    case 'state':
+                                        csharpType = 'string';
+                                        break;
+                                    default:
+                                        csharpType = 'object';
+                                }
+                                csharpCode += `    public ${csharpType} ${attr.attribute_name} { get; set; }\n`;
+                            });
+                            csharpCode += '}\n\n';
+                        }
+                    });
+
+                    csharpPreview.textContent = csharpCode;
+                } catch (error) {
+                    jsonPreview.textContent = 'Invalid xtUML JSON format';
+                    csharpPreview.textContent = '';
+                }
+            };
+
+            reader.readAsText(file);
+        }
+
+        function togglePopup(popupId) {
+            const popup = document.getElementById(popupId);
+            popup.classList.toggle('visible');
+        }
+
+        document.addEventListener('click', function (event) {
+            const infoPopup = document.getElementById('info');
+            const helpPopup = document.getElementById('help');
+            if (!event.target.closest('.info-btn') && !event.target.closest('.help-btn') && !event.target.closest('.popup')) {
+                infoPopup.classList.remove('visible');
+                helpPopup.classList.remove('visible');
+            }
+        });
+    </script>
+</body>
+
+</html>

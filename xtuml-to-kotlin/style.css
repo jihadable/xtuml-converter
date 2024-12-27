@@ -1,0 +1,49 @@
+body {
+    display: flex;
+}
+.convert{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.hidden {
+    display: none;
+}
+.btn {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.upload-btn {
+    background-color: orange;
+}
+.run-btn {
+    background-color: green;
+}
+.copy-btn, .download-btn {
+    background-color: #007BFF;
+}
+.info-btn, .help-btn {
+    background-color: #555;
+}
+pre {
+    background-color: #f4f4f4;
+    text-align: left;
+    padding: 10px;
+    overflow-x: auto;
+}
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border-radius: 5px;
+}

@@ -1,0 +1,72 @@
+body {
+  display: flex;
+}
+
+.convert{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: #333;
+}
+
+pre {
+  background: #f4f4f4;
+  padding: 10px;
+  border: 1px solid #ddd;
+  overflow-x: auto;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 20px;
+}
+
+.container div {
+  flex: 1;
+  margin: 0 10px;
+}
+
+.info-btn, .how-btn {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  padding: 10px 15px;
+  margin: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.info-btn:hover, .how-btn:hover {
+  background-color: #0056b3;
+}
+
+.file-content, .output-content {
+  background: #e0e0e0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.copy-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.copy-btn:hover {
+  background-color: #45a049;
+}

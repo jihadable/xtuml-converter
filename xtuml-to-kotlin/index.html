@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xtUML to Kotlin</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="../styles/convert-section.css">
+    <style>
+        *{
+            font-family: 'Times New Roman', Times, serif;
+        }
+        body{
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-overflow">
+            <div class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/id/c/c6/Logo_UIN_Sunan_Kalijaga.png" alt="UIN SUKA">
+            </div>
+            <div class="links">
+                <a href="../xtuml-to-javascript/" class="link">xtUML to Javascript</a>
+                <a href="../xtuml-to-go/" class="link">xtUML to Go</a>
+                <a href="../xtuml-to-c/" class="link">xtUML to C</a>
+                <a href="../xtuml-to-dart/" class="link">xtUML to Dart</a>
+                <a href="../xtuml-to-cpp/" class="link">xtUML to C++</a>
+                <a href="../xtuml-to-ruby/" class="link">xtUML to Ruby</a>
+                <a href="../xtuml-to-python/" class="link">xtUML to Python</a>
+                <a href="../xtuml-to-swift/" class="link">xtUML to Swift</a>
+                <a href="../xtuml-to-php/" class="link">xtUML to PHP</a>
+                <a href="../xtuml-to-typescript/" class="link">xtUML to Typescript</a>
+                <a href="../xtuml-to-java/" class="link">xtUML to Java</a>
+                <a href="../xtuml-to-kotlin/" class="link">xtUML to Kotlin</a>
+                <a href="../xtuml-to-csharp/" class="link">xtUML to C#</a>
+                <a href="../xtuml-to-sql/" class="link">xtUML to SQL</a>
+                <a href="../visualization/" class="link">Visualization</a>
+            </div>
+        </div>
+    </nav>
+    <div class="convert-section">
+        <div class="convert">
+            <h1>xtUML to Kotlin</h1>
+
+            <!-- Info and Help Buttons -->
+            <button class="btn info-btn" onclick="showPopup('info')">i</button>
+            <button class="btn help-btn" onclick="showPopup('help')">?</button>
+
+            <!-- File Upload Section -->
+            <input type="file" class="file-input hidden" />
+            <button class="btn upload-btn" onclick="document.querySelector('.file-input').click()">Upload JSON file</button>
+            <div class="file-uploaded hidden">
+                <p class="file-name"></p>
+                <button class="btn run-btn hidden">Translate to Kotlin</button>
+            </div>
+
+            <!-- JSON Preview Section -->
+            <div class="preview-container hidden">
+                <h3>JSON Preview:</h3>
+                <pre class="preview"></pre>
+            </div>
+
+            <!-- Result Section -->
+            <div class="result-section hidden">
+                <h3>Generated Kotlin Code:</h3>
+                <div class="result"></div>
+                <button class="btn copy-btn">Copy Code</button>
+                <button class="btn download-btn">Download Code</button>
+            </div>
+
+            <!-- Popup for Info and Help -->
+            <div id="popup" class="popup hidden">
+                <h3 id="popup-title"></h3>
+                <p id="popup-content"></p>
+                <button onclick="closePopup()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

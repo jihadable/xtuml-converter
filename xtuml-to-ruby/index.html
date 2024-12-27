@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xtUML to Ruby</title>
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="../styles/convert-section.css">
+    <style>
+        body {
+            display: flex;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+            margin: 0;
+            background-color: #6b8e63;
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            height: calc(100vh - 240px);
+        }
+
+        .panel {
+            flex: 1;
+            margin: 10px;
+            border: 2px solid #3e4c39;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+
+        .panel header {
+            background-color: #3e4c39;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .panel textarea {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 14px;
+            resize: none;
+            outline: none;
+        }
+
+        .panel textarea:focus {
+            outline: 2px solid #a8c3a4;
+        }
+
+        #controls {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        button {
+            background-color: #6b8e63;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #8ca986;
+        }
+
+        .output-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .output-actions button {
+            width: 70px;
+            height: 40px;
+            border-radius: 10px;
+            background-color: #6b8e63;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+        }
+
+        .output-actions button svg {
+            width: 36px;
+            height: 36px;
+            fill: none;
+            stroke: white;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .output-actions button:hover {
+            background-color: #8ca986;
+        }
+
+        .help {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .help button {
+            background-color: #6b8e63;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .help button:hover {
+            background-color: #8ca986;
+        }
+
+        #fileInput {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .info {
+            padding: 20px;
+            background-color: #e0ebdf;
+            border-top: 2px solid #6b8e63;
+            text-align: center;
+            color: #3e4c39;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-overflow">
+            <div class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/id/c/c6/Logo_UIN_Sunan_Kalijaga.png" alt="UIN SUKA">
+            </div>
+            <div class="links">
+                <a href="../xtuml-to-javascript/" class="link">xtUML to Javascript</a>
+                <a href="../xtuml-to-go/" class="link">xtUML to Go</a>
+                <a href="../xtuml-to-c/" class="link">xtUML to C</a>
+                <a href="../xtuml-to-dart/" class="link">xtUML to Dart</a>
+                <a href="../xtuml-to-cpp/" class="link">xtUML to C++</a>
+                <a href="../xtuml-to-ruby/" class="link">xtUML to Ruby</a>
+                <a href="../xtuml-to-python/" class="link">xtUML to Python</a>
+                <a href="../xtuml-to-swift/" class="link">xtUML to Swift</a>
+                <a href="../xtuml-to-php/" class="link">xtUML to PHP</a>
+                <a href="../xtuml-to-typescript/" class="link">xtUML to Typescript</a>
+                <a href="../xtuml-to-java/" class="link">xtUML to Java</a>
+                <a href="../xtuml-to-kotlin/" class="link">xtUML to Kotlin</a>
+                <a href="../xtuml-to-csharp/" class="link">xtUML to C#</a>
+                <a href="../xtuml-to-sql/" class="link">xtUML to SQL</a>
+                <a href="../visualization/" class="link">Visualization</a>
+            </div>
+        </div>
+    </nav>
+    <div class="convert-section">
+        <div class="convert">
+            <h1>xtUML to Ruby Compiler</h1>
+            <div id="controls">
+                <label for="fileInput">Upload JSON File:</label>
+                <input type="file" id="fileInput" accept=".json" onchange="loadFile()">
+            </div>
+            <div class="container">
+                <div class="panel">
+                    <header>xtUML JSON Input</header>
+                    <textarea id="jsonInput" placeholder="Paste your xtUML JSON here or load a file..."></textarea>
+                </div>
+
+                <div id="controls">
+                    <button onclick="compileToRuby()">Compile to Ruby</button>
+                </div>
+
+                <div class="panel">
+                    <header>Ruby Code Output</header>
+                    <textarea id="rubyOutput" readonly placeholder="Ruby code will appear here..."></textarea>
+                    <div class="output-actions">
+                        <button onclick="copyRubyOutput()" title="Copy Output">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" />
+                                <path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
+                            </svg>
+                        </button>
+                        <button onclick="downloadRubyOutput()" title="Download Output">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+                                <path d="M7 11l5 5l5 -5" />
+                                <path d="M12 4l0 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="help">
+                <button onclick="showInfo()">i</button>
+                <button onclick="showHelp()">?</button>
+            </div>
+
+            <div class="info">
+                <p><strong>About this Tool:</strong> This application helps you convert xtUML JSON data into Ruby code. Upload a JSON file or paste JSON content in the left panel, then click "Compile to Ruby" to see the result. Use the buttons below the output to copy or download the generated Ruby code.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function loadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById('jsonInput').value = e.target.result;
+            };
+
+            if (file) {
+                reader.readAsText(file);
+            }
+        }
+
+        function compileToRuby() {
+            const jsonInput = document.getElementById('jsonInput').value;
+            let jsonObj;
+            try {
+                jsonObj = JSON.parse(jsonInput);
+            } catch (e) {
+                alert('Invalid JSON!');
+                return;
+            }
+
+            const rubyOutput = jsonToRuby(jsonObj); // Assuming jsonToRuby function exists in compiler.js
+            document.getElementById('rubyOutput').value = rubyOutput;
+        }
+
+        function copyRubyOutput() {
+            const rubyCode = document.getElementById('rubyOutput').value;
+            navigator.clipboard.writeText(rubyCode).then(() => {
+                alert('Ruby code copied to clipboard!');
+            });
+        }
+
+        function downloadRubyOutput() {
+            const rubyCode = document.getElementById('rubyOutput').value;
+            if (!rubyCode.trim()) {
+                alert('No Ruby code to download!');
+                return;
+            }
+
+            const blob = new Blob([rubyCode], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'output.rb';
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+
+        function showHelp() {
+            alert('HOW TO USE:\n\n1. Upload a JSON file or paste JSON into the input panel.\n2. Click "Compile to Ruby" to generate Ruby code.\n3. Use the copy or download buttons below the output panel.');
+        }
+
+        function showInfo() {
+            alert('ABOUT THIS TOOL:\n\nThis tool converts xtUML JSON data to Ruby code. It supports uploading JSON files, pasting JSON text, and provides features for copying and downloading the Ruby output.');
+        }
+    </script>
+
+    <script src="compiler.js"></script>
+</body>
+</html>

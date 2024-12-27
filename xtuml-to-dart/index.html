@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>xtUML to Dart</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../styles/navbar.css">
+  <link rel="stylesheet" href="../styles/convert-section.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-overflow">
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/id/c/c6/Logo_UIN_Sunan_Kalijaga.png" alt="UIN SUKA">
+        </div>
+        <div class="links">
+            <a href="../xtuml-to-javascript/" class="link">xtUML to Javascript</a>
+            <a href="../xtuml-to-go/" class="link">xtUML to Go</a>
+            <a href="../xtuml-to-c/" class="link">xtUML to C</a>
+            <a href="./" class="link">xtUML to Dart</a>
+            <a href="../xtuml-to-cpp/" class="link">xtUML to C++</a>
+            <a href="../xtuml-to-ruby/" class="link">xtUML to Ruby</a>
+            <a href="../xtuml-to-python/" class="link">xtUML to Python</a>
+            <a href="../xtuml-to-swift/" class="link">xtUML to Swift</a>
+            <a href="../xtuml-to-php/" class="link">xtUML to PHP</a>
+            <a href="../xtuml-to-typescript/" class="link">xtUML to Typescript</a>
+            <a href="../xtuml-to-java/" class="link">xtUML to Java</a>
+            <a href="../xtuml-to-kotlin/" class="link">xtUML to Kotlin</a>
+            <a href="../xtuml-to-csharp/" class="link">xtUML to C#</a>
+            <a href="../xtuml-to-sql/" class="link">xtUML to SQL</a>
+            <a href="../visualization/" class="link">Visualization</a>
+        </div>
+    </div>
+</nav>
+<div class="convert-section">
+  <div class="convert">
+    <!-- Header Section -->
+  <h1>xtUML to Dart Compiler</h1>
+
+  <!-- Info (i) Button -->
+  <button id="info" class="info-btn">i</button>
+
+  <!-- How (?) Button -->
+  <button id="how" class="how-btn">?</button>
+
+  <!-- File Upload Section -->
+  <input type="file" id="upload" accept=".json">
+  <button id="translate">Translate to Dart</button>
+
+  <!-- Container for Before and After -->
+  <div class="container">
+    <!-- Before Translation -->
+    <div class="file-content">
+      <h3>Uploaded Model File Content:</h3>
+      <pre id="file-content">No file uploaded yet.</pre>
+    </div>
+
+    <!-- After Translation -->
+    <div class="output-content">
+      <h3>Generated Dart Code:</h3>
+      <pre id="output"></pre>
+      <button class="copy-btn" id="copy-button">Copy Text</button>
+    </div>
+  </div>
+  </div>
+</div>
+
+  <!-- JavaScript Files -->
+  <script src="translate.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

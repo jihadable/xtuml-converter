@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xtUML to C++</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="../styles/convert-section.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-overflow">
+            <div class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/id/c/c6/Logo_UIN_Sunan_Kalijaga.png" alt="UIN SUKA">
+            </div>
+            <div class="links">
+                <a href="../xtuml-to-javascript/" class="link">xtUML to Javascript</a>
+                <a href="../xtuml-to-go/" class="link">xtUML to Go</a>
+                <a href="../xtuml-to-c/" class="link">xtUML to C</a>
+                <a href="../xtuml-to-dart/" class="link">xtUML to Dart</a>
+                <a href="./" class="link">xtUML to C++</a>
+                <a href="../xtuml-to-ruby/" class="link">xtUML to Ruby</a>
+                <a href="../xtuml-to-python/" class="link">xtUML to Python</a>
+                <a href="../xtuml-to-swift/" class="link">xtUML to Swift</a>
+                <a href="../xtuml-to-php/" class="link">xtUML to PHP</a>
+                <a href="../xtuml-to-typescript/" class="link">xtUML to Typescript</a>
+                <a href="../xtuml-to-java/" class="link">xtUML to Java</a>
+                <a href="../xtuml-to-kotlin/" class="link">xtUML to Kotlin</a>
+                <a href="../xtuml-to-csharp/" class="link">xtUML to C#</a>
+                <a href="../xtuml-to-sql/" class="link">xtUML to SQL</a>
+                <a href="../visualization/" class="link">Visualization</a>
+            </div>
+        </div>
+    </nav>
+    <div class="convert-section">
+        <div class="convert">
+            <div class="wrapper">
+                <h1>xtUML to C++ Translator</h1>
+                <div class="controls">
+                    <input type="file" id="fileInput" accept=".json">
+                    <button onclick="handleFile()">Translate</button>
+                </div>
+                <div class="popup">
+                    <div class="info">i</div>
+                    <div class="help">?</div>
+                </div>
+                <div class="container">
+                    <textarea id="jsonInput" placeholder="JSON data will appear here..." readonly></textarea>
+                    <textarea id="cppOutput" placeholder="Generated C++ code will appear here..." readonly></textarea>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+    <script src="script.js"></script>
+</body>
+</html>

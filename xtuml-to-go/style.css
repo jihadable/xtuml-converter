@@ -1,0 +1,117 @@
+body {
+    display: flex;
+}
+
+.convert{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    align-items: center;
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 600px;
+    margin: 20px;
+}
+
+h1{
+    margin-bottom: 20px;
+}
+
+h2{
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+
+.filecontent{
+    margin-top: 45px;
+}
+
+h4{
+    margin-bottom: 0;
+}
+p{
+    margin-top: 5px;
+}
+
+.icons {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.icon-button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #00796b; /* Warna background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.icons span {
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.icon-button:hover{
+    background-color: #01352f;
+}
+
+pre {
+    background-color: #eaeaea;
+    padding: 10px;
+    border-radius: 5px;
+    max-height: 300px;
+    overflow: auto;
+    text-align: left;
+}
+
+/* Sembunyikan input file asli */
+#jsonFile {
+    display: none;
+}
+
+/* Gaya tombol umum */
+button, .upload-btn {
+    background-color: #00796b;
+    margin-top: 20px;
+    margin-bottom: 0;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+/* Hover effect untuk semua tombol */
+button:hover, .upload-btn:hover {
+    background-color: #01352f;
+}
+
+/* Grup tombol */
+.button-group {
+    display: flex;
+    gap: 10px; /* Spasi antar tombol */
+    margin-top: 10px; /* Jarak dari elemen sebelumnya */
+}
+
+.button-group button {
+    font-size: 14px;
+    border: 1px solid #ccc;
+}

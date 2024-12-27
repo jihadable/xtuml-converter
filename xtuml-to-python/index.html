@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xtUML to Python</title>
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="../styles/convert-section.css">
+    <style>
+        body {
+            display: flex;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px 4rem;
+            background: linear-gradient(to right, #ffcc00, #fff9e6);
+            color: #333;
+            margin: 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* width: 100%; */
+        }
+        .icon-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .icon {
+            width: 30px;
+            height: 30px;
+            background-color: #f9f9f9;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon:hover {
+            background-color: #ffc107;
+        }
+
+        .icon img {
+            width: 18px;
+            height: 18px;
+        }
+
+        form {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        textarea {
+            width: 100%;
+            resize: vertical;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            min-height: 100px;
+            max-height: 500px;
+        }
+
+        button {
+            background-color: #ffc107;
+            color: #333;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            align-self: center;
+        }
+
+        button:hover {
+            background-color: #ffca28;
+        }
+
+        .output-container {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        h2 {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-overflow">
+            <div class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/id/c/c6/Logo_UIN_Sunan_Kalijaga.png" alt="UIN SUKA">
+            </div>
+            <div class="links">
+                <a href="../xtuml-to-javascript/" class="link">xtUML to Javascript</a>
+                <a href="../xtuml-to-go/" class="link">xtUML to Go</a>
+                <a href="../xtuml-to-c/" class="link">xtUML to C</a>
+                <a href="../xtuml-to-dart/" class="link">xtUML to Dart</a>
+                <a href="../xtuml-to-cpp/" class="link">xtUML to C++</a>
+                <a href="../xtuml-to-ruby/" class="link">xtUML to Ruby</a>
+                <a href="../xtuml-to-python/" class="link">xtUML to Python</a>
+                <a href="../xtuml-to-swift/" class="link">xtUML to Swift</a>
+                <a href="../xtuml-to-php/" class="link">xtUML to PHP</a>
+                <a href="../xtuml-to-typescript/" class="link">xtUML to Typescript</a>
+                <a href="../xtuml-to-java/" class="link">xtUML to Java</a>
+                <a href="../xtuml-to-kotlin/" class="link">xtUML to Kotlin</a>
+                <a href="../xtuml-to-csharp/" class="link">xtUML to C#</a>
+                <a href="../xtuml-to-sql/" class="link">xtUML to SQL</a>
+                <a href="../visualization/" class="link">Visualization</a>
+            </div>
+        </div>
+    </nav>
+    <div class="convert-section">
+        <div class="convert">
+            <h1>xtUML to Python</h1>
+            <div class="icon-container">
+                <div class="icon">
+                    <a href="info.html"><img src="info-circle.svg" alt="Info"></a>
+                </div>
+                <div class="icon">
+                    <a href="question.html"><img src="question-circle.svg" alt="Question"></a>
+                </div>
+            </div>
+            <form>
+                <label for="fileInput">Upload json file:</label>
+                <input type="file" id="fileInput" accept=".json">
+                <textarea id="fileContent" placeholder="json file will be shown here" readonly></textarea>
+                <button type="button" onclick="processFile()">Generate Python source code</button>
+            </form>
+
+            <div class="output-container">
+                <h2>Output:</h2>
+                <textarea id="outputTextarea" placeholder="Python source code will be shown here" readonly></textarea>
+                <div class="button-group">
+                    <button onclick="downloadOutput()">Download</button>
+                    <button onclick="copyOutput()">Copy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include the generate.js script -->
+    <script src="generate.js"></script>
+    <script>
+        const parser = new XTUMLToPythonParser(); // Instantiate the parser class
+
+        // Handle file input and display content
+        document.getElementById('fileInput').addEventListener('change', function () {
+            const file = this.files[0];
+            const fileContentTextarea = document.getElementById('fileContent');
+
+            if (file && file.type === "application/json") {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    fileContentTextarea.value = event.target.result;
+                };
+                reader.onerror = function () {
+                    alert("Terjadi kesalahan saat membaca file.");
+                };
+                reader.readAsText(file);
+            } else {
+                alert("Harap pilih file JSON yang valid.");
+            }
+        });
+
+        // Process the file content using the parser
+        function processFile() {
+            const fileContentTextarea = document.getElementById('fileContent');
+            const outputTextarea = document.getElementById('outputTextarea');
+            const jsonInput = fileContentTextarea.value.trim();
+
+            if (!jsonInput) {
+                alert("Silakan unggah file JSON terlebih dahulu.");
+                return;
+            }
+
+            const pythonCode = parser.parse(jsonInput);
+            if (pythonCode) {
+                outputTextarea.value = pythonCode;
+            } else {
+                outputTextarea.value = "Gagal memproses JSON.";
+            }
+        }
+
+        function downloadOutput() {
+            const content = document.getElementById("outputTextarea").value;
+            const blob = new Blob([content], { type: "text/plain" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "xtUML_output.py";
+            link.click();
+        }
+
+        function copyOutput() {
+            const outputTextarea = document.getElementById("outputTextarea");
+            outputTextarea.select();
+            document.execCommand("copy");
+            alert("Output berhasil disalin ke clipboard!");
+        }
+    </script>
+</body>
+</html>

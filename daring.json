@@ -1,0 +1,575 @@
+{
+	"type": "subsystem",
+	"sub_id": "s1",
+	"sub_name": "daring",
+	"model": [
+		{
+			"type": "class",
+			"class_id": "1",
+			"class_name": "mahasiswa",
+			"KL": "mhs",
+			"attributes": [
+				{
+					"attribute_type": "naming_attribute",
+					"attribute_name": "nim",
+					"data_type": "id"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "status",
+					"default_value": "states.active",
+					"data_type": "state"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "nama",
+					"data_type": "string"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "semester",
+					"data_type": "integer"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "ipk",
+					"data_type": "real"
+				}
+			],
+			"states": [
+				{
+					"state_id": "1",
+					"state_name": "aktif",
+					"state_value": "active",
+					"state_type": "string",
+					"state_event": ["setActive", "onActive"]
+				},
+				{
+					"state_id": "2",
+					"state_name": "cuti",
+					"state_value": "cuti",
+					"state_type": "string",
+					"state_event": ["setCuti", "onCuti"]
+				},
+				{
+					"state_id": "3",
+					"state_name": "alumni",
+					"state_value": "alumni",
+					"state_type": "string",
+					"state_event": ["setAlumni"]
+				},
+				{
+					"state_id": "4",
+					"state_name": "dropout",
+					"state_value": "dropout",
+					"state_type": "string",
+					"state_event": ["setDropout"]
+				}
+			]
+		},
+		{
+			"type": "class",
+			"class_id": "2",
+			"class_name": "dosen",
+			"KL": "dsn",
+			"attributes": [
+				{
+					"attribute_type": "naming_attribute",
+					"attribute_name": "nip",
+					"data_type": "id"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "status",
+					"default_value": "dsn_status.active",
+					"data_type": "state"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "nama",
+					"data_type": "string"
+				}
+			],
+			"states": [
+				{
+					"state_id": "5",
+					"state_name": "aktif",
+					"state_value": "active",
+					"state_type": "string",
+					"state_event": ["setActive", "onActive"]
+				},
+				{
+					"state_id": "6",
+					"state_name": "cuti",
+					"state_value": "cuti",
+					"state_type": "string",
+					"state_event": ["setCuti", "onCuti"]
+				}
+			]
+		},
+		{
+			"type": "class",
+			"class_id": "3",
+			"class_name": "mata_kuliah",
+			"KL": "mtk",
+			"attributes": [
+				{
+					"attribute_type": "naming_attribute",
+					"attribute_name": "matkul_id",
+					"data_type": "id"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "nama",
+					"data_type": "string"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "curriculum",
+					"data_type": "integer"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "required_semester",
+					"data_type": "integer"
+				}
+			]
+		},
+		{
+			"type": "association",
+			"name": "R1",
+			"class": [
+				{
+					"class_id": "1",
+					"class_name": "mahasiswa",
+					"class_multiplicity": "0..*"
+				},
+				{
+					"class_id": "3",
+					"class_name": "mata_kuliah",
+					"class_multiplicity": "0..*"
+				}
+			],
+			"model": {
+				"type": "association_class",
+				"class_id": "4",
+				"class_name": "mahasiswa_matakuliah",
+				"KL": "mhs_mtk",
+				"attributes": [
+					{
+						"attribute_type": "naming_attribute",
+						"attribute_name": "mhs_mtk_id",
+						"data_type": "id"
+					},
+					{
+						"attribute_type": "referential_attribute",
+						"attribute_name": "matkul_id",
+						"data_type": "id"
+					},
+					{
+						"attribute_type": "referential_attribute",
+						"attribute_name": "nim",
+						"data_type": "id"
+					}
+				]
+			}
+		},
+		{
+			"type": "association",
+			"name": "R2",
+			"class": [
+				{
+					"class_id": "2",
+					"class_name": "dosen",
+					"class_multiplicity": "0..*"
+				},
+				{
+					"class_id": "3",
+					"class_name": "mata_kuliah",
+					"class_multiplicity": "1..*"
+				}
+			],
+			"model": {
+				"type": "association_class",
+				"class_id": "5",
+				"class_name": "dosen_matakuliah",
+				"KL": "dsn_mtk",
+				"attributes": [
+					{
+						"attribute_type": "naming_attribute",
+						"attribute_name": "dsn_mtk_id",
+						"data_type": "id"
+					},
+					{
+						"attribute_type": "referential_attribute",
+						"attribute_name": "matkul_id",
+						"data_type": "id"
+					},
+					{
+						"attribute_type": "referential_attribute",
+						"attribute_name": "nip",
+						"data_type": "id"
+					}
+				]
+			}
+		},
+		{
+			"type": "association",
+			"name": "R3",
+			"class": [
+				{
+					"class_id": "4",
+					"class_name": "mahasiswa_matakuliah",
+					"class_multiplicity": "1..*"
+				},
+				{
+					"class_id": "5",
+					"class_name": "dosen_matakuliah",
+					"class_multiplicity": "0..*"
+				}
+			],
+			"model": {
+				"type": "association_class",
+				"class_id": "6",
+				"class_name": "mahasiswa_dosen_matakuliah",
+				"KL": "mhs_dsn_mtk",
+				"attributes": [
+					{
+						"attribute_type": "naming_attribute",
+						"attribute_name": "mhs_dsn_mtk_id",
+						"data_type": "id"
+					},
+					{
+						"attribute_type": "referential_attribute",
+						"attribute_name": "mhs_mtk_id",
+						"data_type": "id"
+					},
+					{
+						"attribute_type": "referential_attribute",
+						"attribute_name": "dsn_mtk_id",
+						"data_type": "id"
+					}
+				]
+			}
+		},
+		{
+			"type": "class",
+			"class_id": "7",
+			"class_name": "uang_kuliah_tunggal",
+			"KL": "ukt",
+			"attributes": [
+				{
+					"attribute_type": "naming_attribute",
+					"attribute_name": "ukt_id",
+					"data_type": "id"
+				},
+				{
+					"attribute_type": "referential_attribute",
+					"attribute_name": "prodi_id",
+					"data_type": "id"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "golongan",
+					"data_type": "string"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "nominal",
+					"data_type": "integer"
+				}
+			]
+		},
+		{
+			"type": "association",
+			"name": "R4",
+			"class": [
+				{
+					"class_id": "7",
+					"class_name": "uang_kuliah_tunggal",
+					"class_multiplicity": "1..*"
+				},
+				{
+					"class_id": "8",
+					"class_name": "program_studi",
+					"class_multiplicity": "1..1"
+				}
+			]
+		},
+		{
+			"type": "class",
+			"class_id": "8",
+			"class_name": "program_studi",
+			"KL": "prodi",
+			"attributes": [
+				{
+					"attribute_type": "naming_attribute",
+					"attribute_name": "prodi_id",
+					"data_type": "id"
+				},
+				{
+					"attribute_type": "referential_attribute",
+					"attribute_name": "fakultas_id",
+					"data_type": "id"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "name",
+					"data_type": "string"
+				}
+			]
+		},
+		{
+			"type": "association",
+			"name": "R5",
+			"class": [
+				{
+					"class_id": "8",
+					"class_name": "program_studi",
+					"class_multiplicity": "1..*"
+				},
+				{
+					"class_id": "9",
+					"class_name": "fakultas",
+					"class_multiplicity": "1..1"
+				}
+			]
+		},
+		{
+			"type": "class",
+			"class_id": "9",
+			"class_name": "fakultas",
+			"KL": "fkl",
+			"attributes": [
+				{
+					"attribute_type": "naming_attribute",
+					"attribute_name": "fkl_id",
+					"data_type": "id"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "name",
+					"data_type": "string"
+				}
+			]
+		},
+		{
+			"type": "class",
+			"class_id": "10",
+			"class_name": "tugas_akhir",
+			"KL": "ta",
+			"attributes": [
+				{
+					"attribute_type": "naming_attribute",
+					"attribute_name": "ta_id",
+					"data_type": "id"
+				},
+				{
+					"attribute_type": "referential_attribute",
+					"attribute_name": "mhs_id",
+					"data_type": "id"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "name",
+					"data_type": "string"
+				}
+			]
+		},
+		{
+			"type": "association",
+			"name": "R6",
+			"class": [
+				{
+					"class_id": "1",
+					"class_name": "mahasiswa",
+					"class_multiplicity": "1..1"
+				},
+				{
+					"class_id": "9",
+					"class_name": "tugas_akhir",
+					"class_multiplicity": "1..1"
+				}
+			]
+		},
+		{
+			"type": "imported_class",
+			"sub_id": "s2",
+			"class_id": "10",
+			"class_name": "uji",
+			"KL": "uji",
+			"attributes": [
+				{
+					"attribute_type": "naming_attribute",
+					"attribute_name": "id",
+					"data_type": "id"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "status",
+					"default_value": "uji.aktif",
+					"data_type": "state"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "nama",
+					"data_type": "string"
+				}
+			],
+			"states": [
+				{
+					"state_id": "1",
+					"state_name": "resume",
+					"state_value": "resume",
+					"state_type": "string",
+					"state_event": ["setResume", "onResume"]
+				},
+				{
+					"state_id": "2",
+					"state_name": "pause",
+					"state_value": "pause",
+					"state_type": "string",
+					"state_event": ["setPause", "onPause"]
+				}
+			]
+		},
+		{
+			"type": "class",
+			"class_id": "50",
+			"class_name": "DaftarMatkul",
+			"KL": "DafM",
+			"attributes": [
+				{
+					"attribute_type": "naming_attribute",
+					"attribute_name": "id_status_pendaftaran",
+					"data_type": "id"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "nama_mata_kuliah",
+					"data_type": "string"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "status_pendaftaran",
+					"default_value": "states.Terdaftar",
+					"data_type": "state"
+				}
+			],
+			"states": [
+				{
+					"state_id": "1",
+					"state_name": "Terdaftar",
+					"state_value": "Terdaftar",
+					"state_type": "string",
+					"state_event": ["setTerdaftar"],
+					"transitions": [],
+					"action": "// Implementation code here"
+				},
+				{
+					"state_id": "2",
+					"state_name": "Dalam Antrian",
+					"state_value": "Dalam Antrian",
+					"state_type": "string",
+					"state_event": ["setDalamAntrian"],
+					"transitions": [
+						{
+							"target_state_id": "3",
+							"target_state": "Menunggu Persetujuan Prodi"
+						}
+					],
+					"action": "// Implementation code here"
+				},
+				{
+					"state_id": "3",
+					"state_name": "Menunggu Persetujuan Prodi",
+					"state_value": "Menunggu Persetujuan Prodi",
+					"state_type": "string",
+					"state_event": ["setMenungguPersetujuanProdi"],
+					"transitions": [
+						{
+							"target_state_id": "1",
+							"target_state": "Terdaftar"
+						}
+					],
+					"action": "// Implementation code here"
+				}
+			]
+		},
+		{
+			"type": "class",
+			"class_id": "55",
+			"class_name": "FasilitasKampus",
+			"KL": "FasK",
+			"attributes": [
+				{
+					"attribute_type": "naming_attribute",
+					"attribute_name": "id_fasilitas",
+					"data_type": "id"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "nama_fasilitas",
+					"data_type": "string"
+				},
+				{
+					"attribute_type": "related_component",
+					"attribute_name": "nama_fasilitas",
+					"data_type": "inst_ref",
+					"related_class_id": "9",
+					"related_class_name": "fakultas"
+				}
+			]
+		},
+		{
+			"type": "class",
+			"class_id": "58",
+			"class_name": "Peminatan",
+			"KL": "Pem",
+			"attributes": [
+				{
+					"attribute_type": "naming_attribute",
+					"attribute_name": "id_peminatan",
+					"data_type": "id"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "nama_peminatan",
+					"data_type": "string"
+				},
+				{
+					"attribute_type": "related_component",
+					"attribute_name": "nama_peminatan",
+					"data_type": "inst_ref_set",
+					"related_class_id": "1",
+					"related_class_name": "mahasiswa"
+				}
+			]
+		},
+		{
+			"type": "class",
+			"class_id": "59",
+			"class_name": "PembayaranUKT",
+			"KL": "PemUKT",
+			"attributes": [
+				{
+					"attribute_type": "naming_attribute",
+					"attribute_name": "id_pembayaran_ukt",
+					"data_type": "id"
+				},
+				{
+					"attribute_type": "descriptive_attribute",
+					"attribute_name": "nama_pembayaran_ukt",
+					"data_type": "string"
+				},
+				{
+					"attribute_type": "related_component",
+					"attribute_name": "TIMER_UKT",
+					"data_type": "inst_ref_<timer>",
+					"related_class_KL": "TIM",
+					"related_class_name": "Timer"
+				}
+			]
+		}
+	]
+}

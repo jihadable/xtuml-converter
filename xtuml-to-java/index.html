@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>xtUML to Java</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="../styles/convert-section.css">
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="navbar-overflow">
+          <div class="logo">
+              <img src="https://upload.wikimedia.org/wikipedia/id/c/c6/Logo_UIN_Sunan_Kalijaga.png" alt="UIN SUKA">
+          </div>
+          <div class="links">
+            <a href="../xtuml-to-javascript/" class="link">xtUML to Javascript</a>
+            <a href="../xtuml-to-go/" class="link">xtUML to Go</a>
+            <a href="../xtuml-to-c/" class="link">xtUML to C</a>
+            <a href="../xtuml-to-dart/" class="link">xtUML to Dart</a>
+            <a href="../xtuml-to-cpp/" class="link">xtUML to C++</a>
+            <a href="../xtuml-to-ruby/" class="link">xtUML to Ruby</a>
+            <a href="../xtuml-to-python/" class="link">xtUML to Python</a>
+            <a href="../xtuml-to-swift/" class="link">xtUML to Swift</a>
+            <a href="../xtuml-to-php/" class="link">xtUML to PHP</a>
+            <a href="../xtuml-to-typescript/" class="link">xtUML to Typescript</a>
+            <a href="../xtuml-to-java/" class="link">xtUML to Java</a>
+            <a href="../xtuml-to-kotlin/" class="link">xtUML to Kotlin</a>
+            <a href="../xtuml-to-csharp/" class="link">xtUML to C#</a>
+            <a href="../xtuml-to-sql/" class="link">xtUML to SQL</a>
+            <a href="../visualization/" class="link">Visualization</a>
+          </div>
+      </div>
+  </nav>
+    <div class="convert-section">
+      <div class="convert">
+        <div class="container">
+          <div class="header">xtUML to Java</div>
+          <div class="main">
+            <div class="file-input">
+              <input type="file" id="fileInput" />
+              <label for="fileInput">Choose File</label>
+            </div>
+            <div class="actions-icon">
+              <div>
+                <button class="askButton" id="askButton"><i class="fas fa-question"></i></button>
+                <button class="infoButton" id="infoButton"><i class="fas fa-info-circle"></i></button>
+              </div>
+              <div class="output-actions">
+                <button id="copyButton"><i class="fas fa-copy"></i> Copy</button>
+                <button id="downloadButton"><i class="fas fa-download"></i> Download</button>
+              </div>
+            </div>
+            <div class="text-area">
+              <textarea id="jsonInput" placeholder="Paste JSON here..."></textarea>
+              <textarea id="javaOutput" placeholder="Generated Java will appear here..." readonly></textarea>
+            </div>
+    
+            <div class="actions">
+              <!-- <button id="parseButton">Parse</button> -->
+              <button id="translateButton">Translate</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const askButton = document.getElementById("askButton");
+      const infoButton = document.getElementById("infoButton");
+
+      askButton.addEventListener("click", () => {
+        alert('1. Upload JSON file.\n2. Press "Translate" button to convert into Java source code.\n3. You can copy or download the source code.');
+      });
+
+      infoButton.addEventListener("click", () => {
+        alert("This website is used to translate xtUML into Java source code instantly.");
+      });
+    </script>
+
+    <script src="script.js"></script>
+  </body>
+</html>

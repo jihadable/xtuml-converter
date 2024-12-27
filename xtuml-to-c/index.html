@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xtUML to C</title>
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="../styles/convert-section.css">
+    <style>
+        body {
+            display: flex;
+        }
+
+        .convert{
+            text-align: center;
+        }
+        
+        input[type="file"] {
+            display: block;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            margin: 10px auto;
+            background-color: #ea8100;
+            color: #fff;
+            padding: 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 20%;
+        }
+        label:hover {
+            background-color: #f7911d;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            max-width: 80vw;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            height: 100vh;
+        }
+        .container-json{
+            height: 40vh;
+            text-align: left;
+            overflow: auto;
+        }
+        .container-c {
+            height: 40vh;
+            text-align: left;
+            overflow: auto;
+        }
+        pre {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            padding: 10px;
+            overflow-x: auto;
+        }
+        h1 {
+            color: #333;
+        }
+        #compileButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            max-width: 40%;
+            text-align: center;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 8px;
+        }
+
+        #compileButton:hover {
+            background-color: #64c169;
+        }
+        .help {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            top:2rem;
+            right:2%;
+        }
+
+        .help button {
+            background-color: #ddd;
+            color: #222;
+            padding: .5rem;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin: 0 .5rem;
+        }
+
+        .container .actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .container .actions button {
+            background-color: #bbb;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 3px;
+            cursor: pointer;
+            border-radius: 5px;            
+        }
+
+        .container .actions button:hover {
+            background-color: #d5d1d1;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-overflow">
+            <div class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/id/c/c6/Logo_UIN_Sunan_Kalijaga.png" alt="UIN SUKA">
+            </div>
+            <div class="links">
+                <a href="../xtuml-to-javascript/" class="link">xtUML to Javascript</a>
+                <a href="../xtuml-to-go/" class="link">xtUML to Go</a>
+                <a href="./" class="link">xtUML to C</a>
+                <a href="../xtuml-to-dart/" class="link">xtUML to Dart</a>
+                <a href="../xtuml-to-cpp/" class="link">xtUML to C++</a>
+                <a href="../xtuml-to-ruby/" class="link">xtUML to Ruby</a>
+                <a href="../xtuml-to-python/" class="link">xtUML to Python</a>
+                <a href="../xtuml-to-swift/" class="link">xtUML to Swift</a>
+                <a href="../xtuml-to-php/" class="link">xtUML to PHP</a>
+                <a href="../xtuml-to-typescript/" class="link">xtUML to Typescript</a>
+                <a href="../xtuml-to-java/" class="link">xtUML to Java</a>
+                <a href="../xtuml-to-kotlin/" class="link">xtUML to Kotlin</a>
+                <a href="../xtuml-to-csharp/" class="link">xtUML to C#</a>
+                <a href="../xtuml-to-sql/" class="link">xtUML to SQL</a>
+                <a href="../visualization/" class="link">Visualization</a>
+            </div>
+        </div>
+    </nav>
+    <div class="convert-section">
+        <div class="convert">
+            <h1>JSON to C</h1>
+            <label for="fileInput" class="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-upload"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 9l5 -5l5 5" /><path d="M12 4l0 12" /><p>Upload JSON File</p></svg>
+                <input type="file" id="fileInput" accept=".json" style="display: none; margin: 0 auto;" onchange="showFileName()">
+                <p id="currentFile"></p>
+            </label>
+            
+            <div class="container">
+                <h3>JSON Content:</h3>
+                <div class="container-json">
+                    <pre id="jsonDisplay"></pre>
+                </div>
+                <button id="compileButton">Translate To C</button>
+                <h3>C Code Output:</h3>
+                <div class="actions">
+                    <div class="btn"></div>
+                    <button title="Download Output" onclick="downloadText('cOutput', 'output.c')">
+                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
+                    </button>
+                    <button title="Copy Output" onclick="copyToClipboard('cOutput')">
+                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-copy"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg>
+                    </button>
+                    </div>
+                <div class="container-c">
+                    <pre id="cOutput"></pre>
+                </div>
+            </div>
+            <div class="help">
+                <button id="helpBtn" title="Click for more information" onclick="alert('HOW TO USE:\n\n1. Click the Upload button and select a JSON file.\n2. Click the Translate to C button.\n3. The results will appear in the Results section.\n4. To download the result, click the Download button.\n5. To copy the result, click the Copy button.');">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-help">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                        <path d="M12 17l0 .01" />
+                        <path d="M12 13.5a1.5 1.5 0 0 1 1 -1.5a2.6 2.6 0 1 0 -3 -4" />
+                    </svg>
+                </button>
+                <button id="aboutBtn" title="Click for more information" onclick="alert('This is a JSON to C Compiler.\n\nThis tool is used to compile a JSON file into a C source code file.\n\nSupported JSON syntax: standard JSON syntax.')">
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-info-circle"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /><path d="M12 9h.01" /><path d="M11 12h1v4h1" /></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="compiler.js"></script>
+</body>
+</html>
+
