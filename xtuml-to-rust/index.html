@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xtUML to Rust</title>
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="../styles/convert-section.css">
+    <style>
+        /* CSS Styles */
+        body {
+            display: flex;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #555;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            font-family: 'Courier New', Courier, monospace;
+            resize: none;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .secondary-button {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 8px 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .secondary-button:hover {
+            background-color: #0056b3;
+        }
+
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-overflow">
+            <div class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/id/c/c6/Logo_UIN_Sunan_Kalijaga.png" alt="UIN SUKA">
+            </div>
+            <div class="links">
+                <a href="../xtuml-to-javascript/" class="link">xtUML to Javascript</a>
+                <a href="../xtuml-to-go/" class="link">xtUML to Go</a>
+                <a href="../xtuml-to-c/" class="link">xtUML to C</a>
+                <a href="../xtuml-to-dart/" class="link">xtUML to Dart</a>
+                <a href="../xtuml-to-cpp/" class="link">xtUML to C++</a>
+                <a href="../xtuml-to-ruby/" class="link">xtUML to Ruby</a>
+                <a href="../xtuml-to-python/" class="link">xtUML to Python</a>
+                <a href="../xtuml-to-swift/" class="link">xtUML to Swift</a>
+                <a href="../xtuml-to-php/" class="link">xtUML to PHP</a>
+                <a href="../xtuml-to-typescript/" class="link">xtUML to Typescript</a>
+                <a href="../xtuml-to-java/" class="link">xtUML to Java</a>
+                <a href="../xtuml-to-kotlin/" class="link">xtUML to Kotlin</a>
+                <a href="../xtuml-to-csharp/" class="link">xtUML to C#</a>
+                <a href="../xtuml-to-rust/" class="link">xtUML to Rust</a>
+                <a href="../visualization/" class="link">Visualization</a>
+            </div>
+        </div>
+    </nav>
+    <div class="convert-section">
+        <div class="convert">
+            <div class="container">
+                <h1>XTUML to Rust Converter</h1>
+                
+                <!-- Info and Help Buttons -->
+                <div class="buttons">
+                    <button id="infoButton" class="secondary-button">ℹ️ Info</button>
+                    <button id="helpButton" class="secondary-button">❓ Help</button>
+                </div>
+                
+                <!-- Modal for Info and Help -->
+                <div id="modal" class="modal">
+                    <div class="modal-content">
+                        <span id="closeModal" class="close">&times;</span>
+                        <div id="modalText"></div>
+                    </div>
+                </div>
+        
+                <textarea id="xtumlInput" placeholder="Paste your XTUML JSON here"></textarea>
+                <button id="convertButton">Convert to Rust</button>
+                <pre id="rustOutput" class="output"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript Code
+
+        // Function to convert XTUML JSON to Rust code
+        function convertXtumlToRust(xtuml) {
+            let rustCode = "";
+
+            // Extract subsystem and model
+            const subsystemName = xtuml.sub_name;
+            rustCode += `// Subsystem: ${subsystemName}\n\n`;
+
+            xtuml.model.forEach(element => {
+                if (element.type === "class") {
+                    // Generate Rust struct for each class
+                    rustCode += `#[derive(Debug, Clone)]\n`;
+                    rustCode += `pub struct ${capitalize(element.class_name)} {\n`;
+
+                    element.attributes.forEach(attr => {
+                        rustCode += `    pub ${attr.attribute_name}: ${convertDataType(attr.data_type)},\n`;
+                    });
+
+                    rustCode += `}\n\n`;
+
+                    // Generate enums for states if present
+                    if (element.states && element.states.length > 0) {
+                        rustCode += `#[derive(Debug, Clone)]\n`;
+                        rustCode += `pub enum ${capitalize(element.class_name)}State {\n`;
+
+                        element.states.forEach(state => {
+                            rustCode += `    ${capitalize(state.state_name)},\n`;
+                        });
+
+                        rustCode += `}\n\n`;
+                    }
+                } else if (element.type === "association") {
+                    // Generate associations as comments (or implement relationship handling if needed)
+                    rustCode += `// Association: ${element.name}\n`;
+                    element.class.forEach(cls => {
+                        rustCode += `//    ${cls.class_name} [${cls.class_multiplicity}]\n`;
+                    });
+                    rustCode += `\n`;
+                }
+            });
+
+            return rustCode;
+        }
+
+        // Helper function to capitalize words
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        // Helper function to map data types
+        function convertDataType(dataType) {
+            switch (dataType) {
+                case "id":
+                    return "u64";
+                case "string":
+                    return "String";
+                case "integer":
+                    return "i32";
+                case "real":
+                    return "f64";
+                case "state":
+                    return "String"; // or specific state enum if implemented
+                default:
+                    return "String"; // Default to String if unknown
+            }
+        }
+
+        // Event listener for Info Button
+        document.getElementById('infoButton').addEventListener('click', function () {
+            const modalText = `
+                <h2>About XTUML to Rust Converter</h2>
+                <p>This tool allows you to convert XTUML JSON models into equivalent Rust code. 
+                Simply paste your JSON representation of an XTUML model into the input box and click "Convert to Rust".</p>`;
+            showModal(modalText);
+        });
+
+        // Event listener for Help Button
+        document.getElementById('helpButton').addEventListener('click', function () {
+            const modalText = `
+                <h2>How to Use</h2>
+                <ol>
+                    <li>Prepare a valid XTUML JSON model. Example:
+                        <pre>
+{
+    "sub_name": "SubsystemName",
+    "model": [
+        {
+            "type": "class",
+            "class_name": "ClassName",
+            "attributes": [
+                { "attribute_name": "id", "data_type": "id" },
+                { "attribute_name": "name", "data_type": "string" }
+            ],
+            "states": [
+                { "state_name": "State1" },
+                { "state_name": "State2" }
+            ]
+        }
+    ]
+}
+                        </pre>
+                    </li>
+                    <li>Paste the JSON in the input box.</li>
+                    <li>Click "Convert to Rust" to generate Rust code.</li>
+                </ol>`;
+            showModal(modalText);
+        });
+
+        // Helper function to show modal
+        function showModal(content) {
+            const modal = document.getElementById('modal');
+            const modalText = document.getElementById('modalText');
+            modalText.innerHTML = content;
+            modal.style.display = 'block';
+        }
+
+        // Event listener for closing modal
+        document.getElementById('closeModal').addEventListener('click', function () {
+            const modal = document.getElementById('modal');
+            modal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside the content
+        window.addEventListener('click', function (event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Event listener for Convert button
+        document.getElementById('convertButton').addEventListener('click', function () {
+            const xtumlInput = document.getElementById('xtumlInput').value;
+
+            try {
+                const xtuml = JSON.parse(xtumlInput);
+                const rustCode = convertXtumlToRust(xtuml);
+                document.getElementById('rustOutput').textContent = rustCode;
+            } catch (e) {
+                document.getElementById('rustOutput').textContent = 'Invalid XTUML JSON format!';
+            }
+        });
+    </script>
+</body>
+</html>
