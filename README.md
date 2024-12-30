@@ -1,1 +1,1 @@
-# xtUML Converter
+# xtUML Model Compiler
